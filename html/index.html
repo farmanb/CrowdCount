@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  
+"http://www.w3.org/TR/xhtml11/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>Crowd Counter</title>
+    <!--Tyr-->
+    <!--<script src="https://www.google.com/jsapi?key=ABQIAAAA7t2ISUFvNpKam51yH5J1NRQW5c9LSTyO-0ic3WvONgl-qkQNHxRwato0TMRVTk8nTdUAnst5xsDcYw" type="text/javascript"></script>-->
+    <!--CEMS-->
+    <script src="https://www.google.com/jsapi?key=ABQIAAAA7t2ISUFvNpKam51yH5J1NRTug3FjRBdPteh6E-oE1d6ZZp9bMxRgGpaC2dF1zrNdj9g-HV0pM41Gow" type="text/javascript"></script>
+    
+    <script language="Javascript" type="text/javascript">
+    google.load("jquery", "1");
+    google.load("maps", "3", {other_params: "sensor=false"});
+    
+    google.setOnLoadCallback(function() {
+	var geocoder = new google.maps.Geocoder();
+	if (navigator.geolocation){
+	    $("#browserSupported").html("Your browser is supported.");
+	    navigator.geolocation.getCurrentPosition(function(position){
+		var location = "Lat: " + position.coords.latitude + ", Long: " + position.coords.longitude;
+		$("#yourLatLong").html(location);
+		
+		
+		
+		var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		geocoder.geocode({'latLng': pos}, function(results, status){
+		    if (status == google.maps.GeocoderStatus.OK){
+			$("#yourLocation").html(results[1].formatted_address);
+		    }
+		    else{
+			$("#yourLocation").html("Error: " + status + ".");
+		    }
+		});
+	    },
+						     function(error){
+							 $("#error").html("Error: " + geolocationErrorMessages[error.code] + ".");
+						     },
+						     {enableHighAccuracy: true, maximumAge:120000});
+	}
+	else{
+	    $("#browserSupported").html("Your browser is not supported");
+	}
+    });
+    </script>
+  </head>
+  
+  <body>
+    <p>
+      <span id="browserSupported"></span>
+      <span id="yourLatLong"></span>
+    </p>
+    <span id="yourLocation"></span>
+    <span id="error"></span>
+  </p>
+  </body>
+
+</html>
