@@ -16,17 +16,41 @@
     google.setOnLoadCallback(function() {
 	var geocoder = new google.maps.Geocoder();
 	if (navigator.geolocation){
-	    $("#browserSupported").html("Your browser is supported.");
+	    //$("#browserSupported").html("Your browser is supported.");
 	    navigator.geolocation.getCurrentPosition(function(position){
 		var location = "Lat: " + position.coords.latitude + ", Long: " + position.coords.longitude;
-		$("#yourLatLong").html(location);
-		
-		
+		//$("#yourLatLong").html(location);
 		
 		var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		geocoder.geocode({'latLng': pos}, function(results, status){
 		    if (status == google.maps.GeocoderStatus.OK){
-			$("#yourLocation").html(results[1].formatted_address);
+			var xmlhttp = new XMLHttpRequest();
+			var city, state, country;
+			var components = results[1].address_components;
+			
+			/*Get the city, state and country.*/
+			for (i in components){
+			    var compTypes = components[i].types
+			    for (j in compTypes){
+				if (compTypes[j] == 'locality'){
+				    city = components[i].short_name;
+				}
+				if (compTypes[j] == 'administrative_area_level_1'){
+				    state = components[i].short_name;
+				}
+				if (compTypes[j] == 'country'){
+				    country = components[i].short_name;
+				}
+			    }
+			}
+			
+			xmlhttp.onreadystatechange = function(){
+			    if (xmlhttp.readyState == 4){
+				$("#yourLocation").html(xmlhttp.responseText);
+			    }
+			}
+			xmlhttp.open("GET", "dbInteraction.php?city=" + city + "?state=" + state + "?country=" + country, true);
+			xmlhttp.send();
 		    }
 		    else{
 			$("#yourLocation").html("Error: " + status + ".");
@@ -44,7 +68,6 @@
     });
     </script>
   </head>
-  
   <body>
     <p>
       <span id="browserSupported"></span>
@@ -54,5 +77,4 @@
     <span id="error"></span>
   </p>
   </body>
-
 </html>
