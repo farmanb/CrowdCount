@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"  
+"http://www.w3.org/TR/xhtml11/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>
+    Stats
+    </title>
+    <script language="Javascript" type="text/javascript">
+	var xmlhttp = new XMLHttpRequest();
+	
+        xmlhttp.onreadystatechange = function(){
+	if (xmlhttp.readyState == 4){
+	    $("#countrySelect").html(xmlhttp.responseText);
+	}
+    }
+    xmlhttp.open("GET", "genCountry.php", true);
+    xmlhttp.send();
+    </script>
+    </head>
+    <body>
+    <p>
+    <span id="countrySelect"></span>
+    </p>
+    <p>
+    <span id="stateSelect"></span>
+    </p>
+    <p>
+    <span id="citySelect"></span>
+    </p>
+    <p>
+    <span id="results"></span>
+    </p>
+    </body>
+    </html>

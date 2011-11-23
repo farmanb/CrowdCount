@@ -9,7 +9,7 @@
      
      echo "$location[0], $location[1], $location[2]";
      
-     include "/home/blake/dbInfo.php";
+     include "/users/b/f/bfarman/dbInfo.php";
      $conn = mysql_connect(dbString, dbUser, dbPass);
 
      mysql_select_db(dbName);
@@ -36,7 +36,7 @@
      date_default_timezone_set('America/New_York');
      
      /*Record the date and the location*/
-     $query = "INSERT INTO CrowdCount (LocationID, Date, Time) VALUES ('$locID', '" . date("Y-m-d") . "','" . date("g:m:s:u") ."')";
+     $query = "INSERT INTO CrowdCount (LocationID, Date, Time) VALUES ('$locID', '" . date("Y-m-d") . "','" . date("g:i:s:u") ."')";
      mysql_query($query);
      
      mysql_close($conn);

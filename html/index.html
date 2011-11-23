@@ -26,7 +26,22 @@ function count(){
     }
     xmlhttp.open("GET", "dbInteraction.php?city=" + city + "?state=" + state + "?country=" + country, true);
     xmlhttp.send();
+
+    displayCount();
 }
+
+    function displayCount(){
+        var countReq = new XMLHttpRequest();
+	
+	countReq.onreadystatechange = function(){
+	  if (countReq.readyState == 4){
+	     $("#countPlaceholder").html(countReq.responseText);
+	    }
+	}
+
+	countReq.open("GET", "getCount.php?city=" + city + "?state=" + state + "?country=" + country, true);
+	countReq.send();
+    }
 
 google.setOnLoadCallback(function() {
     var geocoder = new google.maps.Geocoder();
@@ -92,6 +107,9 @@ google.setOnLoadCallback(function() {
       <span id="yourLatLong"></span>
     </p>
     <span id="error"></span>
+  </p>
+  <p>
+  <span id="countPlaceholder"></span>
   </p>
   </body>
 </html>
