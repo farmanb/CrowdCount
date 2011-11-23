@@ -1,3 +1,5 @@
+use BFARMAN;
+
 INSERT INTO StateCodes (Code, Name)
 VALUES ('AL','Alabama'),
 ('AK','Alaska'),
@@ -34,7 +36,7 @@ VALUES ('AL','Alabama'),
 ('NC','North Carolina'),
 ('ND','North Dakota'),
 ('OH','Ohio'),
-('OK',' Oklahoma'),
+('OK','Oklahoma'),
 ('OR','Oregon'),
 ('PA','Pennsylvania'),
 ('RI','Rhode Island'),
