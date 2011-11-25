@@ -15,7 +15,7 @@
 	$result = mysql_query($countryQuery) or die('Invalid query: ' . mysql_error());
 
 	$retVal = array();
-	$retVal["Select Your State"] = "--";
+	$retVal["Select Your City"] = "--";
 	
 	if (mysql_num_rows($result) != 0){
 		while ($row = mysql_fetch_assoc($result)){
