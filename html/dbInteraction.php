@@ -1,27 +1,31 @@
   <?php 
-     $args = $_GET['city'];
-     $location = preg_split('/\?/', $args);
-     $location[1] = preg_replace("/.*=/", "", $location[1]);
-     $location[2] = preg_replace("/.*=/", "", $location[2]);
-     $city = $location[0];
-     $state = $location[1];
-     $country = $location[2];
-     
-     echo "$location[0], $location[1], $location[2]";
+    $city = $_GET['city'];
+    $state = $_GET['state'];
+    $country = $_GET['country'];
+    $latitude = $_GET['latitude'];
+    $longitude = $_GET['longitude'];
+
+     echo "$city, $state, $country, $latitude, $longitude";
      
      include "/users/b/f/bfarman/dbInfo.php";
      $conn = mysql_connect(dbString, dbUser, dbPass);
 
      mysql_select_db(dbName);
      
-     $locIDQuery = "SELECT ID FROM Locations WHERE City= '" . $city . "' AND State = '" . $state . "'" . "AND Country = '" . $country . "'";
+     $locIDQuery = "SELECT ID FROM Locations WHERE " .
+     		 "City= '" . $city . "' AND " . 
+     		 "State = '" . $state . "' AND " . 
+		 "Country = '" . $country . "' AND ".
+		 "Latitude = '" . $latitude . "' AND ".
+		 "Longitude = '" . $longitude . "'";
+     echo "$locIDQuery";
      $result = mysql_query($locIDQuery);
      
      $locID = -1;
      
      /*Insert the location if it doesn't already exist.*/
      if(mysql_num_rows($result) == 0){
-	 if (!mysql_query("INSERT INTO Locations (City,State,Country) VALUES ('$city','$state','$country')")){
+	 if (!mysql_query("INSERT INTO Locations (City,State,Country, Latitude, Longitude) VALUES ('$city','$state','$country', '$latitude', '$longitude')")){
 	     echo "Error adding location.";
 	 }
 	 $result = mysql_query("SELECT LAST_INSERT_ID() FROM Locations");

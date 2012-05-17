@@ -13,7 +13,7 @@
     google.load("jquery", "1");
 google.load("maps", "3", {other_params: "sensor=false"});
 
-var city, state, country;
+var city, state, country, latitude, longitude;
 
 function count(){
     var xmlhttp = new XMLHttpRequest();
@@ -24,7 +24,7 @@ function count(){
 	    $("#status").html("Counted.");
 	}
     }
-    xmlhttp.open("GET", "dbInteraction.php?city=" + city + "?state=" + state + "?country=" + country, true);
+    xmlhttp.open("GET", "dbInteraction.php?city=" + city + "&state=" + state + "&country=" + country + "&latitude=" + latitude + "&longitude=" + longitude, true);
     xmlhttp.send();
 
     displayCount();
@@ -48,7 +48,9 @@ google.setOnLoadCallback(function() {
     if (navigator.geolocation){
 	//$("#browserSupported").html("Your browser is supported.");
 	navigator.geolocation.getCurrentPosition(function(position){
-	    var location = "Lat: " + position.coords.latitude + ", Long: " + position.coords.longitude;
+	    latitude = position.coords.latitude;
+	    longitude = position.coords.longitude;
+	    var location = "Lat: " + latitude + ", Long: " + longitude;    
 	    //$("#yourLatLong").html(location);
 	    
 	    var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);

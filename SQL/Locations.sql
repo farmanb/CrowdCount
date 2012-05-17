@@ -3,4 +3,6 @@ create table Locations(ID int not null primary key auto_increment,
 City text not null,
 State char(2),
 Country text not null,
-foreign key(State) references StateCodes(Code));
+foreign key(State) references StateCodes(Code),
+'Latitude' decimal(18,15),
+'Longitude' decimal(18,15));

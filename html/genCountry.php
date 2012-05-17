@@ -1,6 +1,7 @@
 <?php
 	include 'generateSelect.php';
-	include "/users/b/f/bfarman/dbInfo.php";
+	#include "/users/b/f/bfarman/dbInfo.php";
+	include "/Users/blake/dbinfo.php";
         
 	$conn = mysql_connect(dbString, dbUser, dbPass);
 
