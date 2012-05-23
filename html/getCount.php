@@ -2,23 +2,19 @@
 	include 'generateSelect.php';
 	include "/users/b/f/bfarman/dbInfo.php";
 
-	$args = $_GET['city'];
-	$location = preg_split('/\?/', $args);
-	$city = $location[0];
-	$state = preg_replace("/.*=/", "", $location[1]);
-	$country = preg_replace("/.*=/", "", $location[2]);
+	$city = $_GET['city'];
+	$state = $_GET['state'];
+	$country = $_GET['country'];
 
 	$conn = mysql_connect(dbString, dbUser, dbPass);
 
 	mysql_select_db(dbName);
 
-	$locIDQuery = "SELECT ID FROM Locations WHERE City= '" . $city . "' AND State = '" . $state . "'" . "AND Country = '" . $country . "'";
-	$result = mysql_query($locIDQuery) or die('Invalid query: ' . mysql_error());
-	
-	$row = mysql_fetch_assoc($result);
-	$locID = $row['ID'];
-
-	$query = "select Date, count(*) from CrowdCount where LocationID='"  . $locID. "' group by Date";
+	$query = "SELECT c.Date, count(*) from CrowdCount as c " .
+		"INNER JOIN Locations as l " .
+		"on c.LocationID = l.ID " .
+		"where l.City='$city' AND l.State='$state' AND l.Country='$country' " .
+		"group by c.Date";
 	$result = mysql_query($query) or die('Invalid query: ' . mysql_error());
 
 	$html = "<table cellpadding=\"10\">\n";
